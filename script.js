@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Contact Form → Google Apps Script → Google Sheet
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgxCyxMJN3z7rMpklKyG_WOcU3JRVowCxLD5vOkEFmb6fOnFbUoSMWyg4D2e3ZgGM5Ag/exec';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxNTN-eRoDrc60uC62GMzaAMZ7Eb7CrLs3cPPlI1qEinPIjR0_BS2G0mdKISXO3AHr9/exec';
   const contactForm = document.getElementById('contact-form');
   const successModal = document.getElementById('success-modal');
   const modalClose = document.getElementById('modal-close');
