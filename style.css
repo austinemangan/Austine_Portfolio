@@ -305,41 +305,120 @@ nav.scrolled {
   margin-bottom: 1.5rem;
 }
 
-.hero-title {
-  font-size: 4rem;
-  line-height: 1.1;
-  margin-bottom: 0.5rem;
+/* Hero Hook Line */
+.hero-hook {
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-bottom: 1.25rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--accent-red);
+  max-width: 520px;
 }
 
-.hero-subtitle {
-  font-size: 1.25rem;
-  font-family: var(--font-mono);
-  color: var(--accent-red);
-  margin-bottom: 1.5rem;
-  text-transform: uppercase;
+.hero-title {
+  font-size: 3.6rem;
+  line-height: 1.05;
+  margin-bottom: 0.75rem;
 }
 
 .highlight {
   color: var(--accent-red);
 }
 
-.typewriter-wrapper {
-  font-size: 1.5rem;
-  color: var(--text-secondary);
+/* Dual-track identity pills in hero */
+.hero-dual-track {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.track-separator {
   font-family: var(--font-mono);
-  margin-bottom: 2.5rem;
-  height: 2rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
 }
 
-.typewriter-text {
-  border-right: 2px solid var(--accent-color);
-  padding-right: 5px;
-  animation: blink 0.7s infinite;
+/* Track pills (large – hero) */
+.track-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
-@keyframes blink {
-  0%, 100% { border-color: transparent; box-shadow: none; }
-  50% { border-color: var(--accent-color); box-shadow: 2px 0px 8px var(--accent-color); }
+.track-eng {
+  background: rgba(230, 57, 70, 0.15);
+  border: 1px solid rgba(230, 57, 70, 0.4);
+  color: var(--accent-red);
+}
+
+.track-ops {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .track-ops {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.15);
+  color: var(--text-secondary);
+}
+
+/* Track pills (small – cards) */
+.track-pill-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+/* LinkedIn badge in hero */
+.hero-linkedin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  transition: var(--transition);
+  width: fit-content;
+}
+
+.hero-linkedin-badge svg {
+  width: 16px;
+  height: 16px;
+  fill: #0A66C2;
+  flex-shrink: 0;
+}
+
+.hero-linkedin-badge:hover {
+  border-color: #0A66C2;
+  color: #0A66C2;
+  background: rgba(10, 102, 194, 0.08);
+  transform: translateY(-2px);
 }
 
 .hero-cta {
@@ -347,6 +426,123 @@ nav.scrolled {
   gap: 1rem;
   position: relative;
   z-index: 10;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ── Resume Dropdown ── */
+.resume-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.resume-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dropdown-arrow {
+  font-size: 0.75rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.resume-dropdown.open .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.resume-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 260px;
+  background: var(--bg-color-alt);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  z-index: 100;
+  overflow: hidden;
+  animation: dropdownFadeIn 0.2s ease;
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.resume-dropdown.open .resume-dropdown-menu {
+  display: block;
+}
+
+.resume-option {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.9rem 1.1rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: background 0.2s ease;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.resume-option:last-child {
+  border-bottom: none;
+}
+
+.resume-option:hover {
+  background: rgba(230, 57, 70, 0.08);
+  color: var(--text-primary);
+}
+
+.resume-opt-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.resume-option span strong {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.15rem;
+}
+
+.resume-option span small {
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+
+/* Contact section resume block */
+.contact-resume-block {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.contact-resume-label {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.contact-resume-block .resume-dropdown {
+  display: inline-block;
+}
+
+.contact-resume-block .resume-dropdown-menu {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.contact-resume-block .resume-dropdown.open .resume-dropdown-menu {
+  display: block;
+  transform: translateX(-50%);
 }
 
 .btn {
@@ -732,6 +928,48 @@ nav.scrolled {
   gap: 2rem;
 }
 
+/* Experience Grid (same as projects-grid but for combined section) */
+.experience-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Hidden experience cards (Show More) */
+.exp-hidden {
+  display: none;
+}
+
+/* Show More Button */
+.show-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
+.show-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 2rem;
+  font-size: 0.9rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+}
+
+.show-more-arrow {
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.show-more-btn.expanded .show-more-arrow {
+  transform: rotate(180deg);
+}
+
+/* Skill tag in-progress style */
+.skill-tag-inprogress {
+  border-style: dashed;
+  opacity: 0.75;
+}
+
 .project-card {
   background-color: var(--bg-overlay);
   backdrop-filter: blur(12px);
@@ -1079,14 +1317,18 @@ footer {
 @media (max-width: 900px) {
   .hero { padding-top: 140px; }
   .hero-title { font-size: 3.2rem; }
-  .hero-subtitle { font-size: 1.1rem; }
+  .hero-hook { font-size: 1.2rem; }
+  .hero-dual-track { justify-content: center; }
+  .hero-linkedin-badge { margin: 0 auto 1.5rem; }
   .about-grid { grid-template-columns: 1fr; }
   .about-image { max-width: 400px; margin: 0 auto; }
   .skills-container { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .experience-grid { grid-template-columns: 1fr; }
   .project-card.featured { flex-direction: column; }
   .featured .project-image, .featured .project-content { width: 100%; }
   .featured .project-image { height: 300px; border-right: none; border-bottom: 1px solid var(--border-color); }
+  .hero-cta { justify-content: center; }
 }
 
 @media (max-width: 768px) {
@@ -1108,8 +1350,8 @@ footer {
 
 @media (max-width: 480px) {
   .hero { padding-top: 120px; }
-  .hero-title { font-size: 2.7rem; }
-  .hero-subtitle { font-size: 0.9rem; }
+  .hero-title { font-size: 2.4rem; }
+  .hero-hook { font-size: 1rem; }
   .btn { padding: 0.6rem 1.2rem; font-size: 0.85rem; }
   .hero-cta { justify-content: center; gap: 0.75rem; }
   .hero-image-circle {
@@ -1121,6 +1363,9 @@ footer {
   .timeline-icon { width: 30px; height: 30px; font-size: 1rem; }
   .timeline::before { left: 14px; }
   .about-stats { flex-direction: column; gap: 1rem; padding: 1.5rem; }
+  .resume-dropdown-menu { min-width: 220px; }
+  .contact-resume-block .resume-dropdown-menu { transform: translateX(-30%); }
+  .contact-resume-block .resume-dropdown.open .resume-dropdown-menu { transform: translateX(-30%); }
   
   /* Disable justify stretching on small mobile screens */
   .about-text p, .project-desc, .timeline-content ul li {

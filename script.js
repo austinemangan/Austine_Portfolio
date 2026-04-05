@@ -61,70 +61,68 @@ document.addEventListener('DOMContentLoaded', () => {
     appearOnScroll.observe(fader);
   });
 
-  // Typewriter Effect
-  const typeText = document.querySelector('.typewriter-text');
-  const words = ['Mechanical Engineer', 'Operations Strategist', 'Future MBA'];
-  let wordIndex = 0;
-  let charIndex = 0;
-  let isDeleting = false;
+  // ── Resume Dropdown Toggles ──
+  function setupResumeDropdown(toggleId, dropdownId) {
+    const btn = document.getElementById(toggleId);
+    const dropdown = btn ? btn.closest('.resume-dropdown') : null;
+    if (!btn || !dropdown) return;
 
-  function type() {
-    const currentWord = words[wordIndex];
-    
-    if (isDeleting) {
-      typeText.textContent = currentWord.substring(0, charIndex - 1);
-      charIndex--;
-    } else {
-      typeText.textContent = currentWord.substring(0, charIndex + 1);
-      charIndex++;
-    }
-
-    let typeSpeed = 100;
-
-    if (isDeleting) {
-      typeSpeed /= 2;
-    }
-
-    if (!isDeleting && charIndex === currentWord.length) {
-      typeSpeed = 2000; // Pause at end
-      isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
-      isDeleting = false;
-      wordIndex = (wordIndex + 1) % words.length;
-      typeSpeed = 500; // Pause before new word
-    }
-
-    setTimeout(type, typeSpeed);
-  }
-  
-  if (typeText) {
-    setTimeout(type, 1000);
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = dropdown.classList.contains('open');
+      // Close all open dropdowns first
+      document.querySelectorAll('.resume-dropdown.open').forEach(d => d.classList.remove('open'));
+      if (!isOpen) {
+        dropdown.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      } else {
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
   }
 
-  // Project Filtering
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const projectCards = document.querySelectorAll('.project-card');
+  setupResumeDropdown('hero-resume-btn', 'hero-resume-menu');
+  setupResumeDropdown('contact-resume-btn', 'contact-resume-menu');
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      // Remove active class from all buttons
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const filterValue = btn.getAttribute('data-filter');
-
-      projectCards.forEach(card => {
-        if (filterValue === 'all' || card.getAttribute('data-category').includes(filterValue)) {
-          card.style.display = card.classList.contains('featured') ? 'flex' : 'flex'; // maintain grid/flex structure
-          if (window.innerWidth <= 900 && card.classList.contains('featured')) {
-             card.style.flexDirection = 'column';
-          }
-        } else {
-          card.style.display = 'none';
-        }
-      });
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.resume-dropdown.open').forEach(d => {
+      d.classList.remove('open');
+      const btn = d.querySelector('.resume-dropdown-toggle');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
     });
   });
+
+  // Prevent dropdown menu clicks from closing
+  document.querySelectorAll('.resume-dropdown-menu').forEach(menu => {
+    menu.addEventListener('click', (e) => e.stopPropagation());
+  });
+
+  // ── Show More / Show Less Experience Cards ──
+  const showMoreBtn = document.getElementById('exp-show-more-btn');
+  const hiddenCards = document.querySelectorAll('.exp-hidden');
+  let isExpanded = false;
+
+  if (showMoreBtn && hiddenCards.length > 0) {
+    showMoreBtn.addEventListener('click', () => {
+      isExpanded = !isExpanded;
+      hiddenCards.forEach(card => {
+        card.style.display = isExpanded ? 'flex' : 'none';
+        if (isExpanded) {
+          // Re-init carousels for newly visible cards
+          const carousel = card.querySelector('.carousel');
+          if (carousel && !carousel.dataset.carouselInit) {
+            initCarousel(carousel);
+            carousel.dataset.carouselInit = 'true';
+          }
+        }
+      });
+      showMoreBtn.classList.toggle('expanded', isExpanded);
+      showMoreBtn.innerHTML = isExpanded
+        ? 'Show Less <span class="show-more-arrow">↓</span>'
+        : 'Show More <span class="show-more-arrow">↓</span>';
+    });
+  }
 
   // Contact Form → Google Apps Script → Google Sheet
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxNTN-eRoDrc60uC62GMzaAMZ7Eb7CrLs3cPPlI1qEinPIjR0_BS2G0mdKISXO3AHr9/exec';
@@ -175,22 +173,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Image Carousel Automation
-  const carousels = document.querySelectorAll('.carousel');
-  carousels.forEach(carousel => {
+  // Image Carousel Automation (named so hidden cards can be initialised on demand)
+  function initCarousel(carousel) {
     const images = carousel.querySelectorAll('img');
     if (images.length <= 1) return;
-    
-    // Initialize
     images.forEach(img => img.style.opacity = '0');
     images[0].style.opacity = '1';
-    
     let currentIndex = 0;
     setInterval(() => {
       images[currentIndex].style.opacity = '0';
       currentIndex = (currentIndex + 1) % images.length;
       images[currentIndex].style.opacity = '1';
-    }, 4000); // 4 seconds per image
+    }, 4000);
+  }
+
+  document.querySelectorAll('.carousel').forEach(carousel => {
+    // Only init carousels that are currently visible (not inside hidden exp-hidden cards)
+    const parentCard = carousel.closest('.exp-hidden');
+    if (!parentCard) initCarousel(carousel);
   });
 
 });
