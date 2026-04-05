@@ -87,6 +87,10 @@ img {
   display: block;
 }
 
+.about-text p, .project-desc, .timeline-content ul li {
+  text-align: justify;
+}
+
 /* Layout Utilities */
 .container {
   max-width: var(--content-width);
@@ -341,6 +345,8 @@ nav.scrolled {
 .hero-cta {
   display: flex;
   gap: 1rem;
+  position: relative;
+  z-index: 10;
 }
 
 .btn {
