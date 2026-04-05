@@ -126,29 +126,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Contact Form → Google Forms with Confirmation Popup
+  // Contact Form → Google Apps Script → Google Sheet
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgxCyxMJN3z7rMpklKyG_WOcU3JRVowCxLD5vOkEFmb6fOnFbUoSMWyg4D2e3ZgGM5Ag/exec';
   const contactForm = document.getElementById('contact-form');
   const successModal = document.getElementById('success-modal');
   const modalClose = document.getElementById('modal-close');
 
   if (contactForm && successModal) {
     contactForm.addEventListener('submit', async (e) => {
-      e.preventDefault(); // stop native form navigation
+      e.preventDefault();
 
       const senderName  = document.getElementById('name').value.trim();
       const senderEmail = document.getElementById('email').value.trim();
+      const senderMsg   = document.getElementById('message').value.trim();
 
-      // Send data to Google Forms via fetch (no-cors bypasses CORS restriction)
-      // Google still records the response — we just can't read the reply
+      // Send to Apps Script as URL-encoded parameters (e.parameter in Apps Script)
       try {
-        await fetch(contactForm.action, {
+        await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
           mode: 'no-cors',
-          body: new FormData(contactForm)
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ name: senderName, email: senderEmail, message: senderMsg })
         });
-      } catch (_) {
-        // no-cors fetch may throw in some edge-cases — data is still sent
-      }
+      } catch (_) { /* no-cors fetch always throws on redirect — data still sent */ }
 
       // Show personalised confirmation modal
       document.getElementById('modal-name').textContent  = senderName  || 'there';
@@ -158,19 +158,13 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.style.overflow = 'hidden';
     });
 
-    // Close modal helpers
     function closeModal() {
       successModal.style.display = 'none';
       document.body.style.overflow = '';
     }
-
     modalClose.addEventListener('click', closeModal);
-    successModal.addEventListener('click', (e) => {
-      if (e.target === successModal) closeModal();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && successModal.style.display === 'flex') closeModal();
-    });
+    successModal.addEventListener('click', (e) => { if (e.target === successModal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && successModal.style.display === 'flex') closeModal(); });
   }
 
   // Back to top
