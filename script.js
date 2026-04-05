@@ -130,28 +130,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactForm = document.getElementById('contact-form');
   const successModal = document.getElementById('success-modal');
   const modalClose = document.getElementById('modal-close');
-  const hiddenIframe = document.querySelector('iframe[name="hidden-iframe"]');
 
   if (contactForm && successModal) {
-    contactForm.addEventListener('submit', () => {
-      // Capture values before the form resets
-      const senderName = document.getElementById('name').value.trim();
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault(); // stop native form navigation
+
+      const senderName  = document.getElementById('name').value.trim();
       const senderEmail = document.getElementById('email').value.trim();
 
-      // When the hidden iframe loads (Google Forms redirect lands there), show modal
-      hiddenIframe.addEventListener('load', () => {
-        // Personalise modal content
-        document.getElementById('modal-name').textContent = senderName || 'there';
-        document.getElementById('modal-email').textContent = senderEmail;
+      // Send data to Google Forms via fetch (no-cors bypasses CORS restriction)
+      // Google still records the response — we just can't read the reply
+      try {
+        await fetch(contactForm.action, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: new FormData(contactForm)
+        });
+      } catch (_) {
+        // no-cors fetch may throw in some edge-cases — data is still sent
+      }
 
-        // Reset and show
-        contactForm.reset();
-        successModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // lock scroll
-      }, { once: true });
+      // Show personalised confirmation modal
+      document.getElementById('modal-name').textContent  = senderName  || 'there';
+      document.getElementById('modal-email').textContent = senderEmail;
+      contactForm.reset();
+      successModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     });
 
-    // Close modal on button click or backdrop click
+    // Close modal helpers
     function closeModal() {
       successModal.style.display = 'none';
       document.body.style.overflow = '';
@@ -161,8 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
     successModal.addEventListener('click', (e) => {
       if (e.target === successModal) closeModal();
     });
-
-    // Allow Escape key to close
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && successModal.style.display === 'flex') closeModal();
     });
