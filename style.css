@@ -1121,4 +1121,12 @@ footer {
   .timeline-icon { width: 30px; height: 30px; font-size: 1rem; }
   .timeline::before { left: 14px; }
   .about-stats { flex-direction: column; gap: 1rem; padding: 1.5rem; }
+  
+  /* Disable justify stretching on small mobile screens */
+  .about-text p, .project-desc, .timeline-content ul li {
+    text-align: left;
+  }
+  .timeline-content ul li {
+    font-size: 0.9rem;
+  }
 }
