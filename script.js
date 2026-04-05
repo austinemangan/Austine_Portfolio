@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ── Show More / Show Less Experience Cards ──
+  // We toggle the .exp-hidden class (CSS uses !important so inline style won't override)
   const showMoreBtn = document.getElementById('exp-show-more-btn');
   const hiddenCards = document.querySelectorAll('.exp-hidden');
   let isExpanded = false;
@@ -107,14 +108,18 @@ document.addEventListener('DOMContentLoaded', () => {
     showMoreBtn.addEventListener('click', () => {
       isExpanded = !isExpanded;
       hiddenCards.forEach(card => {
-        card.style.display = isExpanded ? 'flex' : 'none';
         if (isExpanded) {
-          // Re-init carousels for newly visible cards
+          card.classList.remove('exp-hidden');
+          card.classList.add('exp-shown');
+          // Init carousel for cards that just became visible
           const carousel = card.querySelector('.carousel');
           if (carousel && !carousel.dataset.carouselInit) {
             initCarousel(carousel);
             carousel.dataset.carouselInit = 'true';
           }
+        } else {
+          card.classList.add('exp-hidden');
+          card.classList.remove('exp-shown');
         }
       });
       showMoreBtn.classList.toggle('expanded', isExpanded);

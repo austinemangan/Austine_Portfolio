@@ -203,9 +203,11 @@ nav.scrolled {
   display: flex;
   align-items: center;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;   /* clip decorative gradients side-to-side */
+  overflow-y: visible;  /* let resume dropdown clear the section */
   background-color: var(--bg-color);
   padding-top: 180px;
+  padding-bottom: 6rem;
 }
 
 .hero-container {
@@ -332,15 +334,19 @@ nav.scrolled {
 .hero-dual-track {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;        /* keep both pills on one line */
   gap: 0.5rem;
   margin-bottom: 1.25rem;
+  overflow-x: auto;         /* graceful on very narrow screens */
+  scrollbar-width: none;
 }
+.hero-dual-track::-webkit-scrollbar { display: none; }
 
 .track-separator {
   font-family: var(--font-mono);
   color: var(--text-secondary);
   font-size: 0.85rem;
+  flex-shrink: 0;
 }
 
 /* Track pills (large – hero) */
@@ -351,10 +357,12 @@ nav.scrolled {
   padding: 0.35rem 0.85rem;
   border-radius: 20px;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .track-eng {
@@ -363,16 +371,17 @@ nav.scrolled {
   color: var(--accent-red);
 }
 
+/* Ops pill: slate-blue — complements the red accent without clashing */
 .track-ops {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: var(--text-primary);
+  background: rgba(99, 152, 210, 0.12);
+  border: 1px solid rgba(99, 152, 210, 0.35);
+  color: #85b4e0;
 }
 
 [data-theme="light"] .track-ops {
-  background: rgba(0,0,0,0.05);
-  border-color: rgba(0,0,0,0.15);
-  color: var(--text-secondary);
+  background: rgba(42, 90, 150, 0.08);
+  border-color: rgba(42, 90, 150, 0.3);
+  color: #2a5a96;
 }
 
 /* Track pills (small – cards) */
@@ -388,6 +397,7 @@ nav.scrolled {
   letter-spacing: 0.4px;
   text-transform: uppercase;
   margin-bottom: 0.4rem;
+  white-space: nowrap;
 }
 
 /* LinkedIn badge in hero */
@@ -434,6 +444,7 @@ nav.scrolled {
 .resume-dropdown {
   position: relative;
   display: inline-block;
+  z-index: 200;   /* above hero::after pseudo-elements */
 }
 
 .resume-dropdown-toggle {
@@ -454,23 +465,40 @@ nav.scrolled {
   transform: rotate(180deg);
 }
 
+/* Hero dropdown: opens UPWARD so it never bleeds into the next section */
+.hero .resume-dropdown-menu {
+  bottom: calc(100% + 8px);
+  top: auto;
+}
+
 .resume-dropdown-menu {
   display: none;
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
-  min-width: 260px;
+  min-width: 270px;
   background: var(--bg-color-alt);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-  z-index: 100;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+  z-index: 300;
   overflow: hidden;
   animation: dropdownFadeIn 0.2s ease;
 }
 
 @keyframes dropdownFadeIn {
   from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* For upward-opening (hero), reverse the animation */
+.hero .resume-dropdown.open .resume-dropdown-menu {
+  display: block;
+  animation: dropdownFadeInUp 0.2s ease;
+}
+
+@keyframes dropdownFadeInUp {
+  from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -933,9 +961,9 @@ nav.scrolled {
   grid-template-columns: repeat(2, 1fr);
 }
 
-/* Hidden experience cards (Show More) */
+/* Hidden experience cards (Show More) — !important beats .project-card { display:flex } */
 .exp-hidden {
-  display: none;
+  display: none !important;
 }
 
 /* Show More Button */
@@ -1318,7 +1346,9 @@ footer {
   .hero { padding-top: 140px; }
   .hero-title { font-size: 3.2rem; }
   .hero-hook { font-size: 1.2rem; }
-  .hero-dual-track { justify-content: center; }
+  /* pills still inline but allowed to scroll on narrow screens */
+  .hero-dual-track { flex-wrap: nowrap; }
+  .track-pill { font-size: 0.72rem; padding: 0.3rem 0.7rem; }
   .hero-linkedin-badge { margin: 0 auto 1.5rem; }
   .about-grid { grid-template-columns: 1fr; }
   .about-image { max-width: 400px; margin: 0 auto; }
@@ -1329,6 +1359,8 @@ footer {
   .featured .project-image, .featured .project-content { width: 100%; }
   .featured .project-image { height: 300px; border-right: none; border-bottom: 1px solid var(--border-color); }
   .hero-cta { justify-content: center; }
+  /* Hero dropdown: ensure it opens upward and stays fully visible */
+  .hero .resume-dropdown-menu { min-width: 240px; }
 }
 
 @media (max-width: 768px) {
@@ -1349,23 +1381,27 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .hero { padding-top: 120px; }
-  .hero-title { font-size: 2.4rem; }
-  .hero-hook { font-size: 1rem; }
+  .hero { padding-top: 120px; padding-bottom: 4rem; }
+  .hero-title { font-size: 2.1rem; }
+  .hero-hook { font-size: 0.95rem; }
+  .track-pill { font-size: 0.65rem; padding: 0.25rem 0.55rem; }
+  .track-separator { font-size: 0.75rem; }
   .btn { padding: 0.6rem 1.2rem; font-size: 0.85rem; }
-  .hero-cta { justify-content: center; gap: 0.75rem; }
+  .hero-cta { justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
   .hero-image-circle {
-    width: 250px;
-    height: 250px;
+    width: 240px;
+    height: 240px;
   }
   .section-title { font-size: 2rem; }
   .timeline-item { padding-left: 45px; }
   .timeline-icon { width: 30px; height: 30px; font-size: 1rem; }
   .timeline::before { left: 14px; }
   .about-stats { flex-direction: column; gap: 1rem; padding: 1.5rem; }
-  .resume-dropdown-menu { min-width: 220px; }
+  /* Dropdown on mobile: center-anchored, reasonable width */
+  .hero .resume-dropdown-menu { left: 50%; transform: translateX(-50%); min-width: 230px; }
+  .hero .resume-dropdown.open .resume-dropdown-menu { display: block; }
   .contact-resume-block .resume-dropdown-menu { transform: translateX(-30%); }
-  .contact-resume-block .resume-dropdown.open .resume-dropdown-menu { transform: translateX(-30%); }
+  .contact-resume-block .resume-dropdown.open .resume-dropdown-menu { display: block; transform: translateX(-30%); }
   
   /* Disable justify stretching on small mobile screens */
   .about-text p, .project-desc, .timeline-content ul li {
