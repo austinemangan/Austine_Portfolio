@@ -126,6 +126,48 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Contact Form → Google Forms with Confirmation Popup
+  const contactForm = document.getElementById('contact-form');
+  const successModal = document.getElementById('success-modal');
+  const modalClose = document.getElementById('modal-close');
+  const hiddenIframe = document.querySelector('iframe[name="hidden-iframe"]');
+
+  if (contactForm && successModal) {
+    contactForm.addEventListener('submit', () => {
+      // Capture values before the form resets
+      const senderName = document.getElementById('name').value.trim();
+      const senderEmail = document.getElementById('email').value.trim();
+
+      // When the hidden iframe loads (Google Forms redirect lands there), show modal
+      hiddenIframe.addEventListener('load', () => {
+        // Personalise modal content
+        document.getElementById('modal-name').textContent = senderName || 'there';
+        document.getElementById('modal-email').textContent = senderEmail;
+
+        // Reset and show
+        contactForm.reset();
+        successModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // lock scroll
+      }, { once: true });
+    });
+
+    // Close modal on button click or backdrop click
+    function closeModal() {
+      successModal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    successModal.addEventListener('click', (e) => {
+      if (e.target === successModal) closeModal();
+    });
+
+    // Allow Escape key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && successModal.style.display === 'flex') closeModal();
+    });
+  }
+
   // Back to top
   const backToTop = document.getElementById('back-to-top');
   if (backToTop) {

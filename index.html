@@ -401,21 +401,28 @@
         <div class="container">
             <h2 class="section-title"><span>07</span> Let's Build Something Together</h2>
             <div class="contact-container">
-                <form action="#" method="POST" class="contact-form">
+                <form
+                    id="contact-form"
+                    action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfXOqWAiHSxdtjVYRGh0XbaZ1fGPNhFlg05wJn4F7kezxqUOA/formResponse"
+                    method="POST"
+                    target="hidden-iframe"
+                    class="contact-form">
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" id="name" name="name" class="form-control" required placeholder="John Doe">
+                        <input type="text" id="name" name="entry.2005620554" class="form-control" required placeholder="John Doe">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" required placeholder="john@example.com">
+                        <input type="email" id="email" name="entry.1045781291" class="form-control" required placeholder="john@example.com">
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
-                        <textarea id="message" name="message" class="form-control" required placeholder="Hello Austine, I would like to..."></textarea>
+                        <textarea id="message" name="entry.839337160" class="form-control" required placeholder="Hello Austine, I would like to..."></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
+                    <button type="submit" id="contact-submit-btn" class="btn btn-primary">Send Message</button>
                 </form>
+                <!-- Hidden iframe to absorb Google Forms redirect -->
+                <iframe name="hidden-iframe" style="display:none;"></iframe>
 
                 <div class="social-links">
                     <a href="https://www.linkedin.com/in/austinemangan005" target="_blank" rel="noopener">
@@ -438,6 +445,16 @@
             </div>
         </div>
     </section>
+
+    <!-- Success Confirmation Modal -->
+    <div id="success-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title" style="display:none;">
+        <div class="modal-card">
+            <div class="modal-icon">✅</div>
+            <h3 id="modal-title" class="modal-title">Message Sent!</h3>
+            <p class="modal-desc">Thanks for reaching out, <strong id="modal-name"></strong>! I'll get back to you at <strong id="modal-email"></strong> as soon as possible.</p>
+            <button class="btn btn-primary modal-close-btn" id="modal-close">Got it 👍</button>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
