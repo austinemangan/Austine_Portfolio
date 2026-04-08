@@ -1416,6 +1416,7 @@ footer {
     overflow-x: visible;
     gap: 0.4rem 0.4rem;
     align-items: center;
+    justify-content: center;
   }
   /* Mech pill takes full first row; & and Ops wrap together */
   .track-pill.track-eng {
