@@ -8,7 +8,7 @@ This is a personal portfolio website built with clean HTML, CSS, and Vanilla Jav
 - `style.css` - All custom styles and CSS variables
 - `script.js` - Interaction logic (theme toggle, animations, filtering)
 - `images/` - Directory for images (Drop `profile.jpg` here)
-- `resumes/` - Directory containing [Mechanical Design Resume](resumes/engineering.pdf) and [Operations & Strategy Resume](resumes/operations.pdf)
+- `resumes/` - Directory containing [Mechanical Design Resume](resumes/Engg_Resume_AJM.pdf) and [Operations & Strategy Resume](resumes/operations.pdf)
 
 ## How to Run Locally
 
