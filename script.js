@@ -1,38 +1,48 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Theme Toggle
+
+  // ── Theme Toggle ──
   const themeToggle = document.getElementById('theme-toggle');
-  const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-  
-  const currentTheme = localStorage.getItem('theme');
-  if (currentTheme == 'light') {
-    document.documentElement.setAttribute('data-theme', 'light');
-    themeToggle.innerHTML = '🌙';
-  } else {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    themeToggle.innerHTML = '☀️';
+  const iconSun = document.getElementById('icon-sun');
+  const iconMoon = document.getElementById('icon-moon');
+
+  function setThemeIcons(theme) {
+    if (theme === 'dark') {
+      iconSun.style.display = 'block';
+      iconMoon.style.display = 'none';
+    } else {
+      iconSun.style.display = 'none';
+      iconMoon.style.display = 'block';
+    }
   }
 
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  setThemeIcons(savedTheme);
+
   themeToggle.addEventListener('click', () => {
-    let theme = document.documentElement.getAttribute('data-theme');
-    if (theme === 'light') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      localStorage.setItem('theme', 'dark');
-      themeToggle.innerHTML = '☀️';
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-      localStorage.setItem('theme', 'light');
-      themeToggle.innerHTML = '🌙';
-    }
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    setThemeIcons(next);
   });
 
-  // Mobile Menu
+  // ── Mobile Menu ──
   const menuBtn = document.getElementById('menu-btn');
   const navLinks = document.getElementById('nav-links');
+
   menuBtn.addEventListener('click', () => {
     navLinks.classList.toggle('nav-active');
   });
 
-  // Sticky Navbar Blur and styling on scroll
+  // Close mobile menu on link click
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('nav-active');
+    });
+  });
+
+  // ── Sticky Navbar ──
   const nav = document.querySelector('nav');
   window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
@@ -42,64 +52,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Scroll Animations (Intersection Observer)
+  // ── Scroll Fade-in Animations ──
   const faders = document.querySelectorAll('.fade-in-section');
   const appearOptions = {
-    threshold: 0.15,
-    rootMargin: "0px 0px -50px 0px"
+    threshold: 0.12,
+    rootMargin: '0px 0px -50px 0px'
   };
 
-  const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+  const appearOnScroll = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       entry.target.classList.add('is-visible');
-      appearOnScroll.unobserve(entry.target);
+      observer.unobserve(entry.target);
     });
   }, appearOptions);
 
-  faders.forEach(fader => {
-    appearOnScroll.observe(fader);
-  });
-
-  // ── Resume Dropdown Toggles ──
-  function setupResumeDropdown(toggleId, dropdownId) {
-    const btn = document.getElementById(toggleId);
-    const dropdown = btn ? btn.closest('.resume-dropdown') : null;
-    if (!btn || !dropdown) return;
-
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = dropdown.classList.contains('open');
-      // Close all open dropdowns first
-      document.querySelectorAll('.resume-dropdown.open').forEach(d => d.classList.remove('open'));
-      if (!isOpen) {
-        dropdown.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-      } else {
-        btn.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-
-  setupResumeDropdown('hero-resume-btn', 'hero-resume-menu');
-  setupResumeDropdown('contact-resume-btn', 'contact-resume-menu');
-
-  // Close dropdowns when clicking outside
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.resume-dropdown.open').forEach(d => {
-      d.classList.remove('open');
-      const btn = d.querySelector('.resume-dropdown-toggle');
-      if (btn) btn.setAttribute('aria-expanded', 'false');
-    });
-  });
-
-  // Prevent dropdown menu clicks from closing
-  document.querySelectorAll('.resume-dropdown-menu').forEach(menu => {
-    menu.addEventListener('click', (e) => e.stopPropagation());
-  });
+  faders.forEach(fader => appearOnScroll.observe(fader));
 
   // ── Show More / Show Less Experience Cards ──
-  // We toggle the .exp-hidden class (CSS uses !important so inline style won't override)
   const showMoreBtn = document.getElementById('exp-show-more-btn');
   const hiddenCards = document.querySelectorAll('.exp-hidden');
   let isExpanded = false;
@@ -111,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isExpanded) {
           card.classList.remove('exp-hidden');
           card.classList.add('exp-shown');
-          // Init carousel for cards that just became visible
+          // Init carousels in newly visible cards
           const carousel = card.querySelector('.carousel');
           if (carousel && !carousel.dataset.carouselInit) {
             initCarousel(carousel);
@@ -129,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Contact Form → Google Apps Script → Google Sheet
+  // ── Contact Form → Google Apps Script ──
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxNTN-eRoDrc60uC62GMzaAMZ7Eb7CrLs3cPPlI1qEinPIjR0_BS2G0mdKISXO3AHr9/exec';
   const contactForm = document.getElementById('contact-form');
   const successModal = document.getElementById('success-modal');
@@ -143,7 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const senderEmail = document.getElementById('email').value.trim();
       const senderMsg   = document.getElementById('message').value.trim();
 
-      // Send to Apps Script as URL-encoded parameters (e.parameter in Apps Script)
       try {
         await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
@@ -153,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       } catch (_) { /* no-cors fetch always throws on redirect — data still sent */ }
 
-      // Show personalised confirmation modal
+      // Show confirmation modal
       document.getElementById('modal-name').textContent  = senderName  || 'there';
       document.getElementById('modal-email').textContent = senderEmail;
       contactForm.reset();
@@ -170,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && successModal.style.display === 'flex') closeModal(); });
   }
 
-  // Back to top
+  // ── Back to Top ──
   const backToTop = document.getElementById('back-to-top');
   if (backToTop) {
     backToTop.addEventListener('click', () => {
@@ -178,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Image Carousel Automation (named so hidden cards can be initialised on demand)
+  // ── Image Carousel ──
   function initCarousel(carousel) {
     const images = carousel.querySelectorAll('img');
     if (images.length <= 1) return;
@@ -193,9 +162,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.querySelectorAll('.carousel').forEach(carousel => {
-    // Only init carousels that are currently visible (not inside hidden exp-hidden cards)
+    // Only init carousels that are currently visible
     const parentCard = carousel.closest('.exp-hidden');
     if (!parentCard) initCarousel(carousel);
+  });
+
+  // ── Active Nav Link Highlight on Scroll ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinksAll = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 120;
+      if (window.scrollY >= sectionTop) {
+        current = section.getAttribute('id');
+      }
+    });
+    navLinksAll.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
   });
 
 });
