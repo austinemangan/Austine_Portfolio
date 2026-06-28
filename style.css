@@ -1395,3 +1395,124 @@ footer {
     font-size: 1.4rem;
   }
 }
+
+/* Writing Index Page */
+.writing-grid {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.writing-card {
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  padding: 2.5rem;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.writing-card:hover {
+  transform: translateY(-3px);
+}
+
+.writing-card-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.writing-tag {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.writing-date {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.writing-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.writing-card-excerpt {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
+}
+
+/* Article Page */
+.article-container {
+  max-width: 680px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+}
+
+.article-header-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.article-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 2.5rem;
+  color: var(--text-primary);
+}
+
+.article-body h2 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  margin: 2.5rem 0 1rem;
+  color: var(--accent);
+}
+
+.article-body p {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.85;
+  margin-bottom: 1.25rem;
+  color: var(--text-primary);
+}
+
+.article-body ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.article-body ul li {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.85;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.article-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

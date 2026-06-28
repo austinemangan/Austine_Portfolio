@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Austine Mangan | Graduate Mechanical Engineer — Operations & Production</title>
+    <meta name="description" content="Operations & Production candidate (Mechanical Engineering). Combines analytical rigour with hands-on execution—directed 400 volunteers and conducted 200 delegate conference 15% under budget.">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html#" class="logo">Austine M.</a>
+            <div class="nav-links" id="nav-links">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#skills">Skills</a>
+                <a href="../index.html#honours">Honours</a>
+                <a href="../writing.html" class="active">WRITING</a>
+                <a href="../index.html#contact">Contact</a>
+            </div>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                <!-- Sun icon (shown in dark mode) -->
+                <svg id="icon-sun" viewBox="0 0 24 24" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <!-- Moon icon (shown in light mode) -->
+                <svg id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="menu-btn" id="menu-btn" aria-label="Menu">
+                <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    
+<main style="padding-top: 80px;">
+  <div class="article-container fade-in-section">
+    <div class="article-header-meta">
+      <span>FEA / STRUCTURAL</span>
+      <span>June 2026</span>
+      <span>8 min read</span>
+    </div>
+    <h1 class="article-title">How We Took 5kg Out of a BAJA Chassis Without Compromising a Single Load Case</h1>
+    <div class="article-body">
+      <p><strong>The constraint that drove everything</strong><br>
+      Weight reduction in a off-road vehicle isn't about aesthetics — it's physics. In SAE BAJA competition, the powertrain is fixed: every team runs the same Briggs &amp; Stratton 10hp engine. That means power-to-weight ratio is one of the few variables you actually control. A lighter chassis accelerates faster, handles better, and puts less cumulative stress on components through endurance — which runs for three hours over rough terrain.</p>
+      
+      <p>Our target: bring the chassis from 35kg to 30kg. A 15% reduction. The constraint: variable FOS had to remain above accepted margins across every critical load case. Not some of them. All of them.<br>
+      That constraint is what separated this from a simple lightweighting exercise.</p>
+
+      <h2>The load case framework — and why each one exists</h2>
+      <p>We validated against six load cases in ANSYS Workbench:</p>
+      <ul>
+        <li><strong>Front impact (3G):</strong> Simulates a head-on collision or steep drop landing nose-first. Highest longitudinal stress on the front bumper and main frame rails.</li>
+        <li><strong>Side impact (1.5G):</strong> Lateral collision scenario. Critical for the side intrusion members and door zone geometry.</li>
+        <li><strong>Rollover (2G):</strong> Tests the main roll hoop and rear roll hoop under combined vertical and lateral loading. This is the load case that keeps the driver alive if the car inverts.</li>
+        <li><strong>Rear impact:</strong> Evaluates the rear protection structure and engine bay integrity under rearward collision loading.</li>
+        <li><strong>Drop test:</strong> Simulates landing from elevation — common in BAJA terrain. Vertical impulse loading across the full suspension pickup geometry.</li>
+        <li><strong>Modal analysis:</strong> Identifies natural frequencies of the chassis. Critical to ensure no resonance overlap with the engine's operating frequency range, which would cause fatigue failure over endurance.</li>
+      </ul>
+      <p>Each case has its own FOS threshold. A member that passes front impact comfortably may be marginal under rollover. Every iteration had to clear all six — not just the worst case.</p>
+
+      <h2>The four design decisions that drove the most iteration</h2>
+      <p><strong>1. Engine compartment and CG reduction</strong><br>
+      The original engine position was constrained by the previous chassis geometry. Our goal wasn't just to make the compartment smaller — it was to lower the engine's vertical position to bring the centre of gravity down. A lower CG directly improves rollover resistance and lateral stability, which mattered both for safety margins and handling performance.<br>
+      This required a complete rethink of gearbox placement. The gearbox couldn't simply be repositioned — it had to be redesigned in its mounting orientation to allow the engine to sit lower while maintaining correct drivetrain geometry. Packaging constraints drove more FEA re-runs here than any other area of the chassis.</p>
+
+      <p><strong>2. Front bumper and steering integration</strong><br>
+      The front bumper section had to do three things simultaneously: absorb front impact loading at 3G, accommodate the full steering system geometry, and keep the driver's egress path unobstructed. That last requirement is structural by rule — egress time is checked at technical inspection.<br>
+      Most FEA tools won't flag an egress problem. That constraint came from sitting a team member in the chassis buck and mapping clearances physically. The final geometry went through multiple iterations before it satisfied all three requirements without adding material back to a section we'd already lightened.</p>
+
+      <p><strong>3. Physical prototyping alongside FEA</strong><br>
+      Before any steel was cut, we built multiple scale chassis models using plastic pipes — cheap, fast to iterate, and dimensionally accurate enough to matter. The goal wasn't aesthetics. It was to put a driver in the frame and answer questions ANSYS can't: Can the driver enter and exit within the rulebook time limit? Does the steering column clear the thigh under full suspension travel? Are the lateral intrusion members actually where they feel like they are on screen?<br>
+      We ran multiple drivers through each iteration — body sizes differ, and the rules don't care about average. A clearance that works for one driver and fails for another is a rulebook violation either way. The physical models caught two geometry conflicts that only showed up because a person was sitting in them. Both were resolved before the design was locked for FEA.<br>
+      This isn't a replacement for simulation. It's the check on simulation's blind spots.</p>
+
+      <p><strong>4. The "one more load case" discipline</strong><br>
+      Early in the process, we had members that passed five of six load cases with comfortable margin. The instinct — especially under deadline — is to call it done. We didn't. Every member that was modified for weight reduction went through the full six-case review before it was signed off. This added time. It also meant we arrived at technical inspection with documented FEA results for every structural member, which is a different kind of confidence than "it should be fine."</p>
+
+      <h2>What ANSYS caught that intuition missed</h2>
+      <p>The rear protection structure. After lightweighting the rear section for CG reasons, the rear impact load case flagged stress concentrations at two weld junction points that weren't visible in static visual review. The geometry looked clean. The simulation disagreed.<br>
+      We added gussets at both junctions — a weight addition of under 200g — and re-ran the full load case set. The stress concentrations resolved. Without FEA, those junctions would have gone to competition as-is. That's the difference between simulation as a checkbox and simulation as a design tool.</p>
+
+      <h2>Endurance as the real validation</h2>
+      <p>We built the car from scratch and took it through every stage of competition — technical inspections, dynamic events, and into the endurance round. Four hours of rough terrain.<br>
+      For a chassis redesigned around weight reduction, finishing endurance was the only number that mattered. Not the FEA results. Not the weight on the scale. The car finishing — with margins that held under exactly the conditions they were designed for — was the validation.<br>
+      35kg to 30kg. Every gram documented. Every load case cleared.</p>
+    </div>
+    <div class="article-footer">
+      <a href="../writing.html" class="btn-secondary">← Back to Writing</a>
+      <a href="https://www.linkedin.com/in/austinemangan005/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+      </a>
+    </div>
+  </div>
+</main>
+<!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <p class="footer-name">AUSTINE MANGAN</p>
+                <p class="footer-subtitle">OPERATIONS  |  PRODUCTION  |  ENGINEERING  |  DESIGN</p>
+            </div>
+            <div class="footer-right">
+                <div class="footer-links">
+                    <a href="https://www.linkedin.com/in/austinemangan005" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="mailto:austinemangan2003@gmail.com" aria-label="Email">
+                        <svg viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z"/></svg>
+                    </a>
+                    <a href="https://github.com/austinemangan" target="_blank" rel="noopener" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                </div>
+                <span class="footer-copyright">Austine Mangan © 2026. Built with intention.</span>
+                <button class="back-to-top" id="back-to-top" aria-label="Back to Top">↑ Top</button>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
