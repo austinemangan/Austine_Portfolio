@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams({ name: senderName, email: senderEmail, message: senderMsg })
         });
-      } catch (_) { /* no-cors fetch always throws on redirect — data still sent */ }
+      } catch (_) { /* no-cors fetch always throws on redirect - data still sent */ }
 
       // Show confirmation modal
       document.getElementById('modal-name').textContent  = senderName  || 'there';

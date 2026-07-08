@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Austine Mangan | Graduate Mechanical Engineer — Operations & Production</title>
-    <meta name="description" content="Operations & Production candidate (Mechanical Engineering). Combines analytical rigour with hands-on execution—directed 400 volunteers and conducted 200 delegate conference 15% under budget.">
+    <title>Austine Mangan | Graduate Mechanical Engineer | Operations & Production</title>
+    <meta name="description" content="Operations & Production candidate (Mechanical Engineering). Combines analytical rigour with hands-on execution. Directed 400 volunteers and conducted 200 delegate conference 15% under budget.">
     <link rel="stylesheet" href="../style.css">
     <link rel="icon" type="image/png" href="../images/Portfolio/favicon.png">
 </head>
@@ -46,7 +46,7 @@
     <h1 class="article-title">How We Took 5kg Out of a BAJA Chassis Without Compromising a Single Load Case</h1>
     <div class="article-body">
       <p><strong>The constraint that drove everything</strong><br>
-      Weight reduction in a off-road vehicle isn't about aesthetics — it's physics. In SAE BAJA competition, the powertrain is fixed: every team runs the same Briggs &amp; Stratton 10hp engine. That means power-to-weight ratio is one of the few variables you actually control. A lighter chassis accelerates faster, handles better, and puts less cumulative stress on components through endurance — which runs for three hours over rough terrain.</p>
+      Weight reduction in an off-road vehicle isn't about aesthetics; it's physics. In SAE BAJA competition, the powertrain is fixed: every team runs the same Briggs &amp; Stratton 10hp engine. That means power-to-weight ratio is one of the few variables you actually control. A lighter chassis accelerates faster, handles better, and puts less cumulative stress on components through endurance, which runs for three hours over rough terrain.</p>
       
       <p>Our target: bring the chassis from 35kg to 30kg. A 15% reduction. The constraint: variable FOS had to remain above accepted margins across every critical load case. Not some of them. All of them.<br>
       That constraint is what separated this from a simple lightweighting exercise.</p>
@@ -58,35 +58,35 @@
         <li><strong>Side impact (1.5G):</strong> Lateral collision scenario. Critical for the side intrusion members and door zone geometry.</li>
         <li><strong>Rollover (2G):</strong> Tests the main roll hoop and rear roll hoop under combined vertical and lateral loading. This is the load case that keeps the driver alive if the car inverts.</li>
         <li><strong>Rear impact:</strong> Evaluates the rear protection structure and engine bay integrity under rearward collision loading.</li>
-        <li><strong>Drop test:</strong> Simulates landing from elevation — common in BAJA terrain. Vertical impulse loading across the full suspension pickup geometry.</li>
+        <li><strong>Drop test:</strong> Simulates landing from elevation, which is common in BAJA terrain. Vertical impulse loading across the full suspension pickup geometry.</li>
         <li><strong>Modal analysis:</strong> Identifies natural frequencies of the chassis. Critical to ensure no resonance overlap with the engine's operating frequency range, which would cause fatigue failure over endurance.</li>
       </ul>
-      <p>Each case has its own FOS threshold. A member that passes front impact comfortably may be marginal under rollover. Every iteration had to clear all six — not just the worst case.</p>
+      <p>Each case has its own FOS threshold. A member that passes front impact comfortably may be marginal under rollover. Every iteration had to clear all six, not just the worst case.</p>
 
       <h2>The four design decisions that drove the most iteration</h2>
       <p><strong>1. Engine compartment and CG reduction</strong><br>
       The original engine position was constrained by the previous chassis geometry. Our goal wasn't just to make the compartment smaller — it was to lower the engine's vertical position to bring the centre of gravity down. A lower CG directly improves rollover resistance and lateral stability, which mattered both for safety margins and handling performance.<br>
-      This required a complete rethink of gearbox placement. The gearbox couldn't simply be repositioned — it had to be redesigned in its mounting orientation to allow the engine to sit lower while maintaining correct drivetrain geometry. Packaging constraints drove more FEA re-runs here than any other area of the chassis.</p>
+      This required a complete rethink of gearbox placement. The gearbox couldn't simply be repositioned; it had to be redesigned in its mounting orientation to allow the engine to sit lower while maintaining correct drivetrain geometry. Packaging constraints drove more FEA re-runs here than any other area of the chassis.</p>
 
       <p><strong>2. Front bumper and steering integration</strong><br>
       The front bumper section had to do three things simultaneously: absorb front impact loading at 3G, accommodate the full steering system geometry, and keep the driver's egress path unobstructed. That last requirement is structural by rule — egress time is checked at technical inspection.<br>
       Most FEA tools won't flag an egress problem. That constraint came from sitting a team member in the chassis buck and mapping clearances physically. The final geometry went through multiple iterations before it satisfied all three requirements without adding material back to a section we'd already lightened.</p>
 
       <p><strong>3. Physical prototyping alongside FEA</strong><br>
-      Before any steel was cut, we built multiple scale chassis models using plastic pipes — cheap, fast to iterate, and dimensionally accurate enough to matter. The goal wasn't aesthetics. It was to put a driver in the frame and answer questions ANSYS can't: Can the driver enter and exit within the rulebook time limit? Does the steering column clear the thigh under full suspension travel? Are the lateral intrusion members actually where they feel like they are on screen?<br>
-      We ran multiple drivers through each iteration — body sizes differ, and the rules don't care about average. A clearance that works for one driver and fails for another is a rulebook violation either way. The physical models caught two geometry conflicts that only showed up because a person was sitting in them. Both were resolved before the design was locked for FEA.<br>
+      Before any steel was cut, we built multiple scale chassis models using plastic pipes - cheap, fast to iterate, and dimensionally accurate enough to matter. The goal wasn't aesthetics. It was to put a driver in the frame and answer questions ANSYS can't: Can the driver enter and exit within the rulebook time limit? Does the steering column clear the thigh under full suspension travel? Are the lateral intrusion members actually where they feel like they are on screen?<br>
+      We ran multiple drivers through each iteration - body sizes differ, and the rules don't care about average. A clearance that works for one driver and fails for another is a rulebook violation either way. The physical models caught two geometry conflicts that only showed up because a person was sitting in them. Both were resolved before the design was locked for FEA.<br>
       This isn't a replacement for simulation. It's the check on simulation's blind spots.</p>
 
       <p><strong>4. The "one more load case" discipline</strong><br>
-      Early in the process, we had members that passed five of six load cases with comfortable margin. The instinct — especially under deadline — is to call it done. We didn't. Every member that was modified for weight reduction went through the full six-case review before it was signed off. This added time. It also meant we arrived at technical inspection with documented FEA results for every structural member, which is a different kind of confidence than "it should be fine."</p>
+      Early in the process, we had members that passed five of six load cases with comfortable margin. The instinct, especially under deadline, is to call it done. We didn't. Every member that was modified for weight reduction went through the full six-case review before it was signed off. This added time. It also meant we arrived at technical inspection with documented FEA results for every structural member, which is a different kind of confidence than assuming it should be fine.</p>
 
       <h2>What ANSYS caught that intuition missed</h2>
       <p>The rear protection structure. After lightweighting the rear section for CG reasons, the rear impact load case flagged stress concentrations at two weld junction points that weren't visible in static visual review. The geometry looked clean. The simulation disagreed.<br>
-      We added gussets at both junctions — a weight addition of under 200g — and re-ran the full load case set. The stress concentrations resolved. Without FEA, those junctions would have gone to competition as-is. That's the difference between simulation as a checkbox and simulation as a design tool.</p>
+      We added gussets at both junctions (a weight addition of under 200g) and re-ran the full load case set. The stress concentrations resolved. Without FEA, those junctions would have gone to competition as-is. That is the difference between simulation as a checkbox and simulation as a design tool.</p>
 
       <h2>Endurance as the real validation</h2>
-      <p>We built the car from scratch and took it through every stage of competition — technical inspections, dynamic events, and into the endurance round. Four hours of rough terrain.<br>
-      For a chassis redesigned around weight reduction, finishing endurance was the only number that mattered. Not the FEA results. Not the weight on the scale. The car finishing — with margins that held under exactly the conditions they were designed for — was the validation.<br>
+      <p>We built the car from scratch and took it through every stage of competition: technical inspections, dynamic events, and into the endurance round. Four hours of rough terrain.<br>
+      For a chassis redesigned around weight reduction, finishing endurance was the only number that mattered. Not the FEA results. Not the weight on the scale. The car finishing, with margins that held under exactly the conditions they were designed for, was the validation.<br>
       35kg to 30kg. Every gram documented. Every load case cleared.</p>
     </div>
     <div class="article-footer">

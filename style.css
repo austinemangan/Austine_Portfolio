@@ -7,7 +7,7 @@
    CSS Custom Properties
    ============================================================ */
 :root {
-  /* Colour Palette — extracted from LinkedIn banner & suit */
+  /* Colour Palette - extracted from LinkedIn banner & suit */
   --green-primary: #2C3E2D;
   --green-dark: #1E2B1F;
   --green-light: #3A5240;
@@ -398,7 +398,7 @@ nav.scrolled {
    Buttons
    ============================================================ */
 
-/* Primary CTA — dark green fill, cream serif label */
+/* Primary CTA - dark green fill, cream serif label */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -1051,7 +1051,7 @@ textarea.form-control {
 }
 
 /* ============================================================
-   Footer — Mirror LinkedIn Banner
+   Footer - Mirror LinkedIn Banner
    ============================================================ */
 footer {
   padding: 4rem 0 2rem;
@@ -1242,7 +1242,7 @@ footer {
 }
 
 /* ============================================================
-   Responsive — 900px
+   Responsive - 900px
    ============================================================ */
 @media (max-width: 900px) {
   .hero-container {
@@ -1315,7 +1315,7 @@ footer {
 }
 
 /* ============================================================
-   Responsive — 768px
+   Responsive - 768px
    ============================================================ */
 @media (max-width: 768px) {
   .menu-btn {
@@ -1347,7 +1347,7 @@ footer {
 }
 
 /* ============================================================
-   Responsive — 480px
+   Responsive - 480px
    ============================================================ */
 @media (max-width: 480px) {
   section {
