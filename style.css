@@ -635,6 +635,25 @@ nav.scrolled {
   color: var(--text-secondary);
 }
 
+/* Project category label — visible badge for recruiter scanning */
+.project-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  color: var(--accent) !important;
+  font-weight: 600 !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 1.5px !important;
+}
+
+.project-category.design-eng::before {
+  content: '◆';
+  font-size: 0.5rem;
+}
+
 .card-meta .card-date {
   font-family: var(--font-sans);
   font-size: 0.75rem;
